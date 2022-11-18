@@ -1,0 +1,28 @@
+{
+  "name": "KQL_pay",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lu-Cog/KQL_pay.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lu-Cog/KQL_pay/issues"
+  },
+  "homepage": "https://github.com/Lu-Cog/KQL_pay#readme",
+  "dependencies": {
+    "axios": "^1.1.3",
+    "linq": "^4.0.1",
+    "oauth": "^0.10.0",
+    "oauth2": "0.0.1",
+    "querystring": "^0.2.1",
+    "vue-facebook-signin-button": "^1.0.1"
+  }
+}

@@ -21,8 +21,12 @@
 			</button>
 		</view>
 		<view class="wabi">
-			<text>您有{{wa_coin}}枚瓦幣，本次使用</text><input type="number" placeholder="0" v-model="wbNum" @input="wbInput()"
+			<text>您有{{islogin?wa_coin:'**'}}枚瓦幣，本次使用</text>
+			<input type="number" :disabled="!islogin" placeholder="0" v-model="wbNum" @input="wbInput()"
 				@blur="wbBlur()" />
+			<view class="shiyong" @click="shiyong">
+				使用
+			</view>
 		</view>
 		<view class="payType">
 			<text>付款方式</text>
@@ -96,16 +100,40 @@
 				shop_id: '',
 				shop_name: '',
 				payName: '',
-				time: ''
+				time: '',
+				islogin:false
 			};
 		},
 		onLoad(option) {
 			this.shop_id = getApp().globalData.shop_id || 0
 			this.shop_name = getApp().globalData.shop_name || ''
 			this.getOrderConfig()
-			this.getUserInfo()
+			if(uni.getStorageSync('token')){
+				this.islogin = true
+				this.getUserInfo()
+			}else{
+				this.islogin = false
+			}
 		},
 		methods: {
+			shiyong(){
+				if(uni.getStorageSync('token')){
+					this.islogin = true
+					this.getUserInfo()
+				}else{
+					this.islogin = false
+					uni.showModal({
+						content:'請先登入',
+						success(res) {
+							if(res.confirm){
+								uni.navigateTo({
+									url:'/pages/index/login'
+								})
+							}
+						}
+					})
+				}
+			},
 			getDate() {
 				Date.prototype.Format = function(fmt) { // author: meizz
 					var o = {
@@ -353,6 +381,7 @@
 			width: 80%;
 
 			text {
+				font-size: 28rpx;
 				color: #FF9EC3;
 				background-color: #F6EAB8;
 				border: 1px solid #FF9EC3;
@@ -373,7 +402,16 @@
 				text-align: right;
 				padding: 0 10rpx;
 			}
-
+			.shiyong{
+				height: 60rpx;
+				background-color: #FFBA04;
+				color: #fff;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 100rpx;
+				border-radius: 10rpx;
+			}
 			button {
 				height: 60rpx;
 				background-color: #FFBA04;

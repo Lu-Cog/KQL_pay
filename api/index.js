@@ -25,11 +25,14 @@ export function register(data) {
 }
 
 export function hoinPay(data) {
-  return request.get("hoin_pay/order_create",data);
+  return request.get("hoin_pay/order_create",data,true);
 }
 
 
 export function hoinPayInfo(data) {
-  return request.get("hoin_pay/get_order",data);
+  return request.get("hoin_pay/get_order",data,true);
 }
 
+export function lineLogin(data) {
+    return request.get("sns/login?quickType=line",data,true);
+}

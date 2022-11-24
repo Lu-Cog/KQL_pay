@@ -10,8 +10,9 @@
 			<p>訂單編號：{{payInfo.order_sn}}</p>
 			<p>支付編號：{{payInfo.gtpay_order_id}}</p>
 			<p>店鋪名稱：{{payInfo.shop_name}}</p>
-			<p>支付金額：{{payInfo.total_price}}</p>
-			<p>瓦幣折抵：{{payInfo.wa_coin}}</p>
+			<p>總金額：{{Number(payInfo.total_price)}}</p>
+			<p>瓦幣折抵：{{Number(payInfo.wa_coin)}}</p>
+			<p>支付金額：{{Number(payInfo.pay_price)}}</p>
 			<p>下單時間：{{payInfo.add_time}}</p>
 		</view>
 	</view>

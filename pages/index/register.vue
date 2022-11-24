@@ -14,7 +14,7 @@
 			<text class="tip">密碼需為8-20位，至少包含一個英文字母和數字</text>
 		</view>
 		<view class="pwd">
-			<text>請選擇以下身份注冊*</text>
+			<text>請選擇以下身份註冊*</text>
 			<radio-group @change="radioChange">
 				<label class="label" v-for="(item, index) in items" :key="item.value">
 					<radio :value="item.value" :checked="item.value === userType" />
@@ -26,7 +26,7 @@
 			</radio-group>
 		</view>
 		<view class="button" @click="register">
-			確認注冊
+			確認註冊
 		</view>
 	</view>
 </template>
@@ -97,7 +97,7 @@
 				register(data).then(res => {
 					uni.hideLoading()
 					uni.showToast({
-						title: '注冊成功',
+						title: '註冊成功',
 						icon: 'success'
 					})
 					uni.reLaunch({

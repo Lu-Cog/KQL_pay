@@ -5,8 +5,13 @@
 		</view>
 		<view class="item">
 			<view class="button line" @click="lineLogin">
+				<image src="../../static/line.png" mode="widthFix"></image>
 				使用LINE登入
 			</view>
+			<!-- <view class="button ios" @click="">
+				<image src="../../static/ios.png" mode="widthFix"></image>
+				使用Apple登入
+			</view> -->
 		</view>
 		<view class="or">
 			OR
@@ -17,11 +22,11 @@
 			</view>
 		</view>
 		<view class="register" @click="goRegister()">
-			注冊新帳號
+			註冊新帳號
 		</view>
 		<view class="bottom">
 			<view class="tip">
-				透過Facebook，Google，Email注冊扛氣來會員，即表示您已閲讀並同意扛氣來的<text @click="goto(2)">定型化契約</text>，<text
+				透過Facebook，Google，Email註冊扛氣來會員，即表示您已閲讀並同意扛氣來的<text @click="goto(2)">定型化契約</text>，<text
 					@click="goto(1)">隱私權政策</text>及<text @click="goto(5)">使用者條款</text>
 			</view>
 		</view>
@@ -87,8 +92,8 @@
 		background: url('../../static/bg.jpg') no-repeat;
 		background-size: 100% 100%;
 		position: relative;
-		height: 100vh;
-		padding: 100rpx 50rpx;
+		min-height: 100vh;
+		padding: 100rpx 50rpx 140rpx;
 		box-sizing: border-box;
 
 		input {
@@ -137,15 +142,27 @@
 			text-align: center;
 			background-color: #FE84B3;
 			color: #FFF;
-			padding: 16rpx;
 			border-radius: 20rpx;
 			margin-bottom: 40rpx;
 			box-shadow: 0 0 10rpx 5rpx rgba(0, 0, 0, .1);
+			height: 80rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			image{
+				width: 60rpx;
+				margin-right: 10rpx;
+				// height: 100%;
+			}
 		}
 		.line{
-			background-color: #31AE38;
+			background-color: #01C302;
+			text-decoration: underline;
 		}
-
+		.ios{
+			background-color: #000;
+			text-decoration: underline;
+		}
 		.tip {
 			font-size: 28rpx;
 			color: #666;

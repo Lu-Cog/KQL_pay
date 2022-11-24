@@ -60,10 +60,13 @@
 						店鋪名稱：{{shop_name}}
 					</p>
 					<p>
-						支付金額：$0
+						總金額：{{money}}
 					</p>
 					<p>
-						瓦幣折抵：${{wbNum}}
+						瓦幣折抵：{{wbNum}}
+					</p>
+					<p>
+						支付金額：0
 					</p>
 					<p>
 						下單時間：{{time}}
@@ -108,6 +111,8 @@
 			this.shop_id = getApp().globalData.shop_id || 0
 			this.shop_name = getApp().globalData.shop_name || ''
 			this.getOrderConfig()
+		},
+		onShow() {
 			if(uni.getStorageSync('token')){
 				this.islogin = true
 				this.getUserInfo()
@@ -123,7 +128,7 @@
 				}else{
 					this.islogin = false
 					uni.showModal({
-						content:'請先登入',
+						content:'若您是扛氣來用戶，且有瓦幣折抵，請先登入',
 						success(res) {
 							if(res.confirm){
 								uni.navigateTo({
@@ -391,6 +396,7 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				white-space: nowrap;
 			}
 
 			input {
@@ -411,6 +417,7 @@
 				align-items: center;
 				width: 100rpx;
 				border-radius: 10rpx;
+				white-space: nowrap;
 			}
 			button {
 				height: 60rpx;
@@ -441,6 +448,7 @@
 				justify-content: center;
 				align-items: center;
 				margin-right: 20rpx;
+				white-space: nowrap;
 			}
 
 			>picker {

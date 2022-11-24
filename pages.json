@@ -29,7 +29,7 @@
 		    "path" : "pages/index/register",
 		    "style" :                                                                                    
 		    {
-		        "navigationBarTitleText": "注冊",
+		        "navigationBarTitleText": "註冊",
 		        "enablePullDownRefresh": false
 		    }
 		    

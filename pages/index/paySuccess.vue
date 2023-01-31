@@ -4,14 +4,14 @@
 			{{payInfo.gtpay_status_str}}
 		</view>
 		<p v-if="payInfo.wa_coin>0">感謝您使用瓦幣折抵消費</p>
-		<p>請出示店家，確認付款成功</p>
+		<p v-if="id">請出示店家，確認付款成功</p>
 		<p>訂單詳情</p>
 		<view class="main">
 			<p>訂單編號：{{payInfo.order_sn}}</p>
 			<p>支付編號：{{payInfo.gtpay_order_id}}</p>
-			<p>店鋪名稱：{{payInfo.shop_name}}</p>
+			<p v-if="id">店鋪名稱：{{payInfo.shop_name}}</p>
 			<p>總金額：{{Number(payInfo.total_price)}}</p>
-			<p>瓦幣折抵：{{Number(payInfo.wa_coin)}}</p>
+			<p v-if="id">瓦幣折抵：{{Number(payInfo.wa_coin)}}</p>
 			<p>支付金額：{{Number(payInfo.pay_price)}}</p>
 			<p>下單時間：{{payInfo.add_time}}</p>
 		</view>
@@ -20,23 +20,56 @@
 
 <script>
 	import {
-		hoinPayInfo
+		hoinPayInfo,
+		memberOrder
 	} from '@/api/index.js'
 	export default {
 		data() {
 			return {
 				id:0,
-				payInfo:{}
+				vip_id:0,
+				payInfo:{},
+				timer:''
 			};
 		},
 		onLoad(option) {
-			this.id = getApp().globalData.order_id || 0
-			this.getInfo()
+			if(getApp().globalData.order_id){
+				this.id = getApp().globalData.order_id
+				this.getInfo()
+				this.timer = setInterval(()=>{
+					this.getInfo()
+				},1000)
+			}else if(getApp().globalData.vip_order_id){
+				this.vip_id = getApp().globalData.vip_order_id
+				this.getVipInfo()
+				this.timer = setInterval(()=>{
+					this.getVipInfo()
+				},1000)
+			}
 		},
 		methods:{
 			getInfo(){
+				uni.showLoading({
+					title:'加載中...'
+				})
 				hoinPayInfo({order_id:this.id}).then(res=>{
 					this.payInfo = res.data
+					if(this.payInfo.gtpay_status == 1){
+						uni.hideLoading()
+						clearInterval(this.timer)
+					}
+				})
+			},
+			getVipInfo(){
+				uni.showLoading({
+					title:'加載中...'
+				})
+				memberOrder({order_id:this.vip_id}).then(res=>{
+					this.payInfo = res.data
+					if(this.payInfo.gtpay_status == 1){
+						uni.hideLoading()
+						clearInterval(this.timer)
+					}
 				})
 			}
 		}

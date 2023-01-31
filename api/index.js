@@ -36,3 +36,11 @@ export function hoinPayInfo(data) {
 export function lineLogin(data) {
     return request.get("sns/login?quickType=line",data,true);
 }
+
+export function memberOrder(data) {
+  return request.get("member/get_order",data);
+}
+
+export function quickLogin(data) {
+  return request.post("index/quickLogin",data);
+}

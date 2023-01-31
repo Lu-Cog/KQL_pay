@@ -104,35 +104,35 @@
 				shop_name: '',
 				payName: '',
 				time: '',
-				islogin:false
+				islogin: false
 			};
 		},
 		onLoad(option) {
-			this.shop_id = getApp().globalData.shop_id || 0
-			this.shop_name = getApp().globalData.shop_name || ''
+			this.shop_id = uni.getStorageSync('shop_id') || 0
+			this.shop_name = uni.getStorageSync('shop_name') || ''
 			this.getOrderConfig()
 		},
 		onShow() {
-			if(uni.getStorageSync('token')){
+			if (uni.getStorageSync('token')) {
 				this.islogin = true
 				this.getUserInfo()
-			}else{
+			} else {
 				this.islogin = false
 			}
 		},
 		methods: {
-			shiyong(){
-				if(uni.getStorageSync('token')){
+			shiyong() {
+				if (uni.getStorageSync('token')) {
 					this.islogin = true
 					this.getUserInfo()
-				}else{
+				} else {
 					this.islogin = false
 					uni.showModal({
-						content:'若您是扛氣來用戶，且有瓦幣折抵，請先登入',
+						content: '若您是扛氣來用戶，且有瓦幣折抵，請先登入',
 						success(res) {
-							if(res.confirm){
+							if (res.confirm) {
 								uni.navigateTo({
-									url:'/pages/index/login'
+									url: '/pages/index/login'
 								})
 							}
 						}
@@ -159,25 +159,25 @@
 				}
 				this.time = new Date().Format("yyyy-MM-dd hh:mm:ss");
 			},
-			create(){
+			create() {
 				uni.showLoading({
-					title:'加載中...'
+					title: '加載中...'
 				})
 				let data = {
-					amount:this.money,
-					wa_coin:this.wbNum,
-					shop_id:this.shop_id,
-					shop_name:this.shop_name,
-					gtpay_type:JSON.parse(JSON.stringify(this.paylist))[this.payindex].type
+					amount: this.money,
+					wa_coin: this.wbNum,
+					shop_id: this.shop_id,
+					shop_name: this.shop_name,
+					gtpay_type: JSON.parse(JSON.stringify(this.paylist))[this.payindex].type
 				}
-				hoinPay(data).then(res=>{
+				hoinPay(data).then(res => {
 					uni.hideLoading()
-					if(res.data.order_id){
+					if (res.data.order_id) {
 						getApp().globalData.order_id = res.data.order_id
 						uni.navigateTo({
-							url:"/pages/index/paySuccess"
+							url: "/pages/index/paySuccess"
 						})
-					}else{
+					} else {
 						window.location.href = res.data.pay_url
 					}
 					this.$refs.popup.close()
@@ -186,22 +186,22 @@
 				})
 			},
 			submit() {
-				if(!this.money){
+				if (!this.money) {
 					return uni.showToast({
-						title:'請輸入金額',
-						icon:'none'
+						title: '請輸入金額',
+						icon: 'none'
 					})
 				}
-				if(Number(this.money)<Number(this.wbNum)){
+				if (Number(this.money) < Number(this.wbNum)) {
 					return uni.showToast({
-						title:'使用瓦幣不可超過實際支付的金額',
-						icon:'none'
+						title: '使用瓦幣不可超過實際支付的金額',
+						icon: 'none'
 					})
 				}
-				if(Number(this.money)==Number(this.wbNum)){
+				if (Number(this.money) == Number(this.wbNum)) {
 					this.getDate()
 					this.$refs.popup.open()
-				}else{
+				} else {
 					this.create()
 				}
 			},
@@ -250,7 +250,7 @@
 			getUserInfo() {
 				let data = {}
 				getUserInfo(data).then(res => {
-					this.wa_coin = parseInt(res.data.wa_coin)
+					this.wa_coin = parseInt(res.data.pay_wa_coin)
 				})
 			},
 			changePay(e) {
@@ -274,47 +274,57 @@
 		align-items: center;
 		flex-direction: column;
 		padding-top: 250rpx;
-		>p{
+
+		>p {
 			color: #fff;
 			font-size: 36rpx;
 			margin-bottom: 40rpx;
-			&:last-child{
+
+			&:last-child {
 				margin-top: 90rpx;
 			}
 		}
-		.title{
+
+		.title {
 			font-weight: 700;
 			font-size: 40rpx;
 		}
-		.mt90{
+
+		.mt90 {
 			margin-top: 70rpx;
 		}
-		.orderInfo{
+
+		.orderInfo {
 			background-color: #E2F0D9;
 			border-radius: 20rpx;
 			padding: 50rpx 30rpx;
 			width: 80%;
-			p{
+
+			p {
 				margin-bottom: 40rpx;
 			}
-			.popupBtn{
+
+			.popupBtn {
 				display: flex;
 				align-items: center;
 				justify-content: space-around;
-				>view{
+
+				>view {
 					border-radius: 10rpx;
 					width: 45%;
 					padding: 20rpx 0;
 					text-align: center;
 				}
-				.sure{
+
+				.sure {
 					background-color: #92B59C;
 					color: #fff;
 				}
-				.cancel{
+
+				.cancel {
 					border: 1px solid #92B59C;
 					color: #92B59C;
-					
+
 				}
 			}
 		}
@@ -408,7 +418,8 @@
 				text-align: right;
 				padding: 0 10rpx;
 			}
-			.shiyong{
+
+			.shiyong {
 				height: 60rpx;
 				background-color: #FFBA04;
 				color: #fff;
@@ -419,6 +430,7 @@
 				border-radius: 10rpx;
 				white-space: nowrap;
 			}
+
 			button {
 				height: 60rpx;
 				background-color: #FFBA04;

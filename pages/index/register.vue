@@ -41,7 +41,7 @@
 				email: '',
 				pwd: '',
 				phone: '',
-				userType:0,
+				userType: 0,
 				items: [{
 					name: '一般用戶',
 					value: 1,

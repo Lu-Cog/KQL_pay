@@ -1,9 +1,10 @@
 <script>
 	export default {
 		globalData:{
-			shop_id:'',
-			shop_name:'',
-			order_id:''
+			order_id:'',
+			vip_order_id:'',
+			openid:'',
+			email:''
 		},
 		onLaunch: function() {
 			// 打包后
@@ -16,12 +17,22 @@
 			// let tmpParas = this.GetRequestParameters(tempStr);
 			// var tmpSceneID = tmpParas["userName"];//提取参数
 			// tmpSceneID = tmpSceneID.replace('#/', '');
-			
-			this.globalData.shop_id = tmpParas["shop_id"];//提取参数
-			this.globalData.shop_name = decodeURI(tmpParas["shop_name"]);//提取参数
+			if(tmpParas["shop_id"]){
+				uni.setStorageSync('shop_id',tmpParas["shop_id"])
+			}
+			if(decodeURI(tmpParas["shop_name"])){
+				uni.setStorageSync('shop_name',decodeURI(tmpParas["shop_name"]))
+			}
 			this.globalData.order_id = tmpParas["order_id"];//提取参数
-			console.log(this.globalData.shop_id);
-			if(this.globalData.order_id){
+			this.globalData.email = tmpParas["email"];//提取参数
+			this.globalData.vip_order_id = tmpParas["vip_order_id"];//提取参数
+			this.globalData.openid = tmpParas["openid"];//提取参数
+			if(this.globalData.openid){
+				uni.reLaunch({
+					url:'/pages/index/login'
+				})
+			}
+			if(this.globalData.order_id || this.globalData.vip_order_id){
 				uni.reLaunch({
 					url:"/pages/index/paySuccess"
 				})

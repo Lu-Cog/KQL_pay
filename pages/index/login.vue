@@ -26,7 +26,7 @@
 		</view>
 		<view class="bottom">
 			<view class="tip">
-				透過Facebook，Google，Email註冊扛氣來會員，即表示您已閲讀並同意扛氣來的<text @click="goto(2)">定型化契約</text>，<text
+				註冊扛氣來會員，即表示您已閲讀並同意扛氣來的<text @click="goto(2)">定型化契約</text>，<text
 					@click="goto(1)">隱私權政策</text>及<text @click="goto(5)">使用者條款</text>
 			</view>
 		</view>
@@ -35,12 +35,17 @@
 
 <script>
 	import {
-		lineLogin
+		lineLogin,
+		quickLogin
 	} from '@/api/index.js'
 	export default {
 		data() {
-			return {
-			};
+			return {};
+		},
+		onLoad() {
+			if(getApp().globalData.openid){
+				this.quickLogin()
+			}
 		},
 		methods: {
 			goRegister() {
@@ -53,25 +58,36 @@
 					url: '/pages/index/webView?type=' + type
 				})
 			},
-			lineLogin(){
+			quickLogin(){
 				uni.showLoading({
-					title:'登入中...'
+					title: '登入中...'
 				})
-				lineLogin({}).then(res=>{
+				let data = {
+					email:getApp().globalData.email,
+					quickId:getApp().globalData.openid,
+					quickType:4
+				}
+				quickLogin(data).then(res => {
 					uni.hideLoading()
 					uni.showToast({
-						title:'登入成功',
-						icon:'success'
+						title: '登入成功',
+						icon: 'success'
 					})
-					uni.setStorageSync('token',res.data.token)
+					uni.setStorageSync('token', res.data.token)
 					uni.reLaunch({
-						url:'/pages/index/index'
+						url: '/pages/index/index'
 					})
 				})
 			},
+			lineLogin() {
+				uni.showLoading({
+					title: '登入中...'
+				})
+				lineLogin({}).then(res => {})
+			},
 			emailLogin() {
 				uni.navigateTo({
-					url:'/pages/index/emailLogin'
+					url: '/pages/index/emailLogin'
 				})
 			}
 		}
@@ -104,9 +120,11 @@
 			padding: 10rpx;
 			color: #fff;
 		}
-		.item{
+
+		.item {
 			margin-top: 100rpx;
 		}
+
 		.pwd {
 			margin-top: 30rpx;
 		}
@@ -117,27 +135,36 @@
 			left: 50rpx;
 			right: 50rpx;
 		}
-		.or{
+
+		.or {
 			text-align: center;
 			font-size: 30rpx;
 			position: relative;
 			margin-top: 20rpx;
-			&:before,&::after{
-				content: '';                 /*CSS伪类用法*/
-				position: absolute;         /*定位背景横线的位置*/
+
+			&:before,
+			&::after {
+				content: '';
+				/*CSS伪类用法*/
+				position: absolute;
+				/*定位背景横线的位置*/
 				top: 52%;
 				color: #666;
-				background: #666;       /*宽和高做出来的背景横线*/
+				background: #666;
+				/*宽和高做出来的背景横线*/
 				width: 40%;
 				height: 1px;
 			}
-			&:before{
+
+			&:before {
 				left: 0%;
 			}
-			&::after{
+
+			&::after {
 				right: 0%;
 			}
 		}
+
 		.button {
 			text-align: center;
 			background-color: #FE84B3;
@@ -149,20 +176,24 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			image{
+
+			image {
 				width: 60rpx;
 				margin-right: 10rpx;
 				// height: 100%;
 			}
 		}
-		.line{
+
+		.line {
 			background-color: #01C302;
 			text-decoration: underline;
 		}
-		.ios{
+
+		.ios {
 			background-color: #000;
 			text-decoration: underline;
 		}
+
 		.tip {
 			font-size: 28rpx;
 			color: #666;
